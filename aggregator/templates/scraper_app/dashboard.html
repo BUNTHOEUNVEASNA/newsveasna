@@ -1,0 +1,80 @@
+{% extends "scraper_app/base_admin.html" %}
+{% load static %}
+
+{% block extra_head %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block title %}Dashboard Overview{% endblock %}
+{% block page_title %}Dashboard Overview{% endblock %}
+
+{% block content %}
+    <div class="metrics-grid">
+        <div class="card metric-card">
+            <p class="metric-label">Total Articles Scraped</p>
+            <p class="metric-value">{{ total_articles }}</p>
+        </div>
+        <div class="card metric-card">
+            <p class="metric-label">Sources Monitored</p>
+            <p class="metric-value">{{ sources_monitored }}</p>
+        </div>
+        <div class="card metric-card">
+            <p class="metric-label">Articles in Last 24 Hrs</p>
+            <p class="metric-value">{{ articles_last_24hrs }}</p>
+        </div>
+        <div class="card metric-card health-card">
+            <p class="metric-label">System Health</p>
+            <p class="metric-value status-running">{{ system_health }}</p>
+        </div>
+    </div>
+    
+    <div class="card chart-card">
+        <h2>Articles Scraped in Last 24 Hrs ({{ articles_last_24hrs }})</h2>
+        <div class="chart-container">
+            <canvas id="scraperChart"></canvas>
+        </div>
+        
+        
+
+    <script>
+        // Use JSON.parse to safely load the JSON string from the view
+        const hourlyData = JSON.parse('{{ hourly_data_json|safe }}');
+        
+        const labels = hourlyData.map(item => item.label);
+        const dataValues = hourlyData.map(item => item.count);
+
+        const ctx = document.getElementById('scraperChart').getContext('2d');
+        const scraperChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Articles Scraped',
+                    data: dataValues,
+                    backgroundColor: 'rgba(99, 102, 241, 0.4)',
+                    borderColor: 'rgb(99, 102, 241)',
+                    borderWidth: 3,
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgb(99, 102, 241)',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { display: true, color: 'rgba(200, 200, 200, 0.2)' },
+                    },
+                    x: {
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+{% endblock content %}

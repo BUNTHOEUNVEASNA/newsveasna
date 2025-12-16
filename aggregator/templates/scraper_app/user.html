@@ -1,0 +1,241 @@
+{% extends "scraper_app/base_admin.html" %}
+
+{% block title %}User Management{% endblock %}
+{% block page_title %} User Management{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Card */
+    .beautiful-card {
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 24px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+        margin-top: 20px;
+    }
+
+    /* Header */
+    .beautiful-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+    }
+
+    .beautiful-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    /* Primary button (top-level) */
+    .btn-primary {
+        background: #4f46e5;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        border: none;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .btn-primary:hover {
+        background: #4338ca;
+    }
+
+    /* Action buttons inside table */
+    .btn-action {
+        padding: 6px 14px;
+        font-size: 13px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 500;
+        color: #ffffff;
+        transition: 0.2s ease-in-out;
+    }
+
+
+/* Beautiful action button layout */
+.action-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Base button */
+.btn-beautiful {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 10px;
+    text-decoration: none;
+    display: inline-flex;       /* prevents wrapping */
+    white-space: nowrap;        /* FORCE one line */
+    align-items: center;
+    transition: all 0.2s ease-in-out;
+    border: none;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+}
+
+
+/* Edit Role */
+.btn-edit {
+    background: #2563eb;
+}
+.btn-edit:hover {
+    background: #1e3fae;
+    box-shadow: 0 3px 8px rgba(37,99,235,0.35);
+}
+
+/* Activate / Deactivate */
+.btn-toggle {
+    background: #6b7280;
+}
+.btn-toggle:hover {
+    background: #4b5563;
+    box-shadow: 0 3px 8px rgba(107,114,128,0.35);
+}
+
+
+    /* Input row */
+    .input-row {
+        display: flex;
+        gap: 10px;
+    }
+
+    input[type="url"],
+    input[type="search"] {
+        padding: 12px 14px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        width: 100%;
+        font-size: 15px;
+    }
+
+    /* Table */
+    .beautiful-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+    }
+
+    .beautiful-table thead {
+        background: #f8f9ff;
+    }
+
+    .beautiful-table th {
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: #6b7280;
+        padding: 14px;
+        border-bottom: 1px solid #e5e7eb;
+        text-align: left;
+    }
+
+
+    .beautiful-table td {
+        padding: 14px;
+        font-size: 15px;
+        color: #374151;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .beautiful-table tr:hover {
+        background: #fafafa;
+    }
+
+    .status-badge {
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+    .status-active {
+        background: #dcfce7;
+        color: #15803d;
+    }
+    .status-inactive {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    .empty-row {
+        text-align: center;
+        padding: 20px;
+        color: #9ca3af;
+        font-style: italic;
+    }
+</style>
+
+<!-- CARD 2: User Management -->
+<div class="beautiful-card">
+
+    <div class="beautiful-header">
+        <div class="beautiful-title">Admin User Management</div>
+        <div style="color:#666; font-size:14px;">
+            Total: {{ admin_users|length }} users
+        </div>
+    </div>
+
+    <table class="beautiful-table">
+        <thead>
+            <tr>
+                <th>User Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th style="width:140px;">Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for user in admin_users %}
+            <tr>
+                <td>{{ user.email }}</td>
+
+                <td>
+                    {% if user.is_superuser %}
+                        Super Admin
+                    {% elif user.is_staff %}
+                        Staff / Reviewer
+                    {% else %}
+                        Basic User
+                    {% endif %}
+                </td>
+
+                <td>
+                    <span class="status-badge status-{{ user.is_active|yesno:'active,inactive' }}">
+                        {{ user.is_active|yesno:'Active,Inactive' }}
+                    </span>
+                </td>
+
+                        <td class="action-buttons">
+                            <a href="{% url 'edit_user_role' user.id %}"
+                            class="btn-beautiful btn-edit">
+                                Edit Role
+                            </a>
+
+                            <a href="{% url 'toggle_user_active' user.id %}"
+                            class="btn-beautiful btn-toggle">
+                                {% if user.is_active %}Deactivate{% else %}Activate{% endif %}
+                            </a>
+                        </td>
+
+
+
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="empty-row">No staff users found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+{% endblock %}

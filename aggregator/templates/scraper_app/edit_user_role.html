@@ -1,0 +1,109 @@
+{% extends "scraper_app/base_admin.html" %}
+
+{% block title %}Edit User Role{% endblock %}
+{% block page_title %}Edit Role{% endblock %}
+
+{% block content %}
+
+<style>
+    /* Card */
+    .beautiful-card {
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 24px;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+        margin-top: 20px;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    /* Labels */
+    .form-label {
+        font-weight: 600;
+        margin-bottom: 6px;
+        display: block;
+        color: #374151;
+    }
+
+    /* Select input */
+    .form-select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid #d1d5db;
+        font-size: 15px;
+        background: #f9fafb;
+        transition: border 0.2s ease-in-out;
+    }
+    .form-select:focus {
+        border-color: #4f46e5;
+        outline: none;
+        background: #fff;
+    }
+
+    /* Submit button */
+    .btn-primary {
+        background: #4f46e5;
+        color: white;
+        padding: 12px;
+        border-radius: 10px;
+        width: 100%;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        margin-top: 12px;
+        transition: 0.2s;
+        font-size: 15px;
+    }
+    .btn-primary:hover {
+        background: #4338ca;
+    }
+
+    /* Back link */
+    .back-link {
+        display: block;
+        margin-top: 20px;
+        text-align: center;
+        color: #4f46e5;
+        font-weight: 500;
+        text-decoration: none;
+    }
+    .back-link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="beautiful-card">
+
+    <h2 class="beautiful-title" style="margin-bottom: 15px;">
+        Edit Role for {{ user.email }}
+    </h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="role" class="form-label">User Role</label>
+
+        <select name="role" id="role" class="form-select">
+            <option value="regular" {% if not user.is_staff and not user.is_superuser %}selected{% endif %}>
+                Regular User
+            </option>
+
+            <option value="staff" {% if user.is_staff and not user.is_superuser %}selected{% endif %}>
+                Staff / Reviewer
+            </option>
+
+            <option value="superuser" {% if user.is_superuser %}selected{% endif %}>
+                Super Admin
+            </option>
+        </select>
+
+        <button type="submit" class="btn-primary">
+            Update Role
+        </button>
+    </form>
+
+</div>
+
+{% endblock %}

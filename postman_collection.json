@@ -1,0 +1,208 @@
+{
+  "info": {
+    "name": "News Scraper API",
+    "description": "API collection for News Scraper application",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Articles",
+      "item": [
+        {
+          "name": "List Articles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/articles/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "articles", ""]
+            },
+            "description": "Get a paginated list of all articles"
+          }
+        },
+        {
+          "name": "Get Article Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/articles/1/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "articles", "1", ""]
+            },
+            "description": "Get details of a specific article"
+          }
+        },
+        {
+          "name": "Filter Articles by Source",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/articles/?source=inshorts",
+              "host": ["{{base_url}}"],
+              "path": ["api", "articles", ""],
+              "query": [
+                {
+                  "key": "source",
+                  "value": "inshorts"
+                }
+              ]
+            },
+            "description": "Filter articles by news source"
+          }
+        },
+        {
+          "name": "Search Articles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/articles/?search=technology",
+              "host": ["{{base_url}}"],
+              "path": ["api", "articles", ""],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "technology"
+                }
+              ]
+            },
+            "description": "Search articles by title or summary"
+          }
+        },
+        {
+          "name": "Filter by Date Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/articles/?date_from=2024-01-01&date_to=2024-12-31",
+              "host": ["{{base_url}}"],
+              "path": ["api", "articles", ""],
+              "query": [
+                {
+                  "key": "date_from",
+                  "value": "2024-01-01"
+                },
+                {
+                  "key": "date_to",
+                  "value": "2024-12-31"
+                }
+              ]
+            },
+            "description": "Filter articles by date range"
+          }
+        },
+        {
+          "name": "Get Article Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/articles/stats/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "articles", "stats", ""]
+            },
+            "description": "Get statistics about articles"
+          }
+        },
+        {
+          "name": "Get Latest Articles",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/articles/latest/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "articles", "latest", ""]
+            },
+            "description": "Get latest articles from the last 24 hours"
+          }
+        },
+        {
+          "name": "Trigger Manual Scraping",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/articles/scrape/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "articles", "scrape", ""]
+            },
+            "description": "Manually trigger the scraping process"
+          }
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/articles/health/",
+              "host": ["{{base_url}}"],
+              "path": ["api", "articles", "health", ""]
+            },
+            "description": "Check the health status of the system"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pagination",
+      "item": [
+        {
+          "name": "First Page",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/articles/?page=1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "articles", ""],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Get first page of articles"
+          }
+        },
+        {
+          "name": "Custom Page Size",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/articles/?page_size=10",
+              "host": ["{{base_url}}"],
+              "path": ["api", "articles", ""],
+              "query": [
+                {
+                  "key": "page_size",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Get articles with custom page size"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    }
+  ]
+}

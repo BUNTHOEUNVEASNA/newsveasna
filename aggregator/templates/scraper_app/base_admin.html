@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scraper Admin - {% block title %}Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="header">
+                <div class="title">Scraper Admin</div>
+                <div class="subtitle">Control Panel</div>
+            </div>
+            <nav class="navigation">
+                {% comment %} The 'active_page' context variable highlights the current link {% endcomment %}
+                <a href="{% url 'dashboard_overview' %}" class="nav-item {% if active_page == 'dashboard_overview' %}active{% endif %}">
+                    <i class="material-icons">dashboard</i> Dashboard Overview
+                </a>
+                <a href="{% url 'source_management' %}" class="nav-item {% if active_page == 'source_management' %}active{% endif %}">
+                    <i class="material-icons">menu</i> Source Management
+                </a>
+                <a href="{% url 'article_review' %}" class="nav-item {% if active_page == 'article_review' %}active{% endif %}">
+                    <i class="material-icons">article</i> Article Review & Search
+                </a>
+
+                <a href="{% url 'settings_users' %}" class="nav-item {% if active_page == 'settings_users' %}active{% endif %}">
+                    <i class="material-icons">settings</i> Scrape
+                </a>
+                <a href="{% url 'user' %}" class="nav-item {% if active_page == 'user' %}active{% endif %}">
+                    <i class="material-icons">settings</i>  User
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <h1>{% block page_title %}Dashboard Overview{% endblock %}</h1>
+            
+            {% comment %} Message Container (Success/Error Alerts) {% endcomment %}
+            {% if messages %}
+                <div class="message-container">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block content %}
+                {% endblock %}
+        </main>
+    </div>
+</body>
+</html>

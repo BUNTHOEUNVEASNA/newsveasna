@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scraper Admin - Dashboard Overview</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> 
+</head>
+<body>
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="header">
+                <div class="title">Scraper Admin</div>
+                <div class="subtitle">Control Panel</div>
+            </div>
+            <nav class="navigation">
+                <a href="{% url 'dashboard_overview' %}" class="nav-item active">
+                    <i class="material-icons">dashboard</i> Dashboard Overview
+                </a>
+                <a href="{% url 'admin:aggregator_newssource_changelist' %}" class="nav-item"> 
+                    <i class="material-icons">source</i> Source Management
+                </a>
+                <a href="{% url 'admin:aggregator_article_changelist' %}" class="nav-item"> 
+                    <i class="material-icons">article</i> Article Review & Search
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="material-icons">timeline</i> Logging & Monitoring
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="material-icons">settings</i> Settings & Users
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <h1>Dashboard Overview</h1>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <div class="metrics-grid">
+                <div class="card metric-card">
+                    <p class="metric-label">Total Articles Scraped</p>
+                    <p class="metric-value">{{ total_articles }}</p>
+                </div>
+                <div class="card metric-card">
+                    <p class="metric-label">Sources Monitored</p>
+                    <p class="metric-value">{{ sources_monitored }}</p>
+                </div>
+                <div class="card metric-card">
+                    <p class="metric-label">Articles in Last 24 Hrs</p>
+                    <p class="metric-value">{{ articles_last_24hrs }}</p>
+                </div>
+                <div class="card metric-card health-card">
+                    <p class="metric-label">System Health</p>
+                    <p class="metric-value status-running">{{ system_health }}</p>
+                </div>
+            </div>
+            
+            <div class="card chart-card">
+                <h2>Articles Scraped in Last 24 Hrs ({{ graph_count }})</h2>
+                <div class="chart-container">
+                    <canvas id="scraperChart"></canvas>
+                </div>
+                
+                <div class="scraper-trigger-box">
+                    <div class="trigger-label">Trigger Scraper</div>
+                    <form action="{% url 'trigger_full_scrape' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-trigger">
+                            Trigger Full Scrape Job
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // Use JSON.parse to safely load the data calculated in the Django view
+        const hourlyData = JSON.parse('{{ hourly_data_json|safe }}');
+        
+        const labels = hourlyData.map(item => item.label);
+        const dataValues = hourlyData.map(item => item.count);
+
+        const ctx = document.getElementById('scraperChart').getContext('2d');
+        const scraperChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Articles Scraped',
+                    data: dataValues,
+                    backgroundColor: 'rgba(99, 102, 241, 0.4)', // Light purple/blue fill
+                    borderColor: 'rgb(99, 102, 241)', // Darker line color
+                    borderWidth: 3,
+                    tension: 0.4, // Smooth line
+                    pointRadius: 5,
+                    pointBackgroundColor: 'rgb(99, 102, 241)',
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: { display: false }, // Remove y-axis grid lines
+                        ticks: { stepSize: 10 }
+                    },
+                    x: {
+                        grid: { display: false } // Remove x-axis grid lines
+                    }
+                }
+            }
+        });
+    </script>
+
+    </body>
+</html>
