@@ -39673,3 +39673,61 @@ INFO 2025-12-16 19:43:13,551 autoreload 21368 24704 D:\clone3\News-Aggregator\ag
 INFO 2025-12-16 19:43:14,408 autoreload 14740 15892 Watching for file changes with StatReloader
 INFO 2025-12-16 19:43:44,647 autoreload 14740 15892 D:\clone3\News-Aggregator\aggregator\serializers.py changed, reloading.
 INFO 2025-12-16 19:43:45,489 autoreload 9504 2248 Watching for file changes with StatReloader
+WARNING 2025-12-16 19:52:45,573 log 9504 20640 Not Found: /accounts/login/
+WARNING 2025-12-16 19:52:45,766 log 9504 20640 Not Found: /favicon.ico
+WARNING 2025-12-16 19:52:54,043 log 9504 20640 Not Found: /accounts/login/
+WARNING 2025-12-16 19:52:57,211 log 9504 20640 Not Found: /accounts/login/
+WARNING 2025-12-16 19:58:24,987 log 9504 17028 Bad Request: /api/token/
+WARNING 2025-12-16 20:14:31,240 log 9504 14904 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:14:31,248 log 9504 14904 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:20:06,089 log 9504 16188 Unauthorized: /api/bookmarks/check/
+WARNING 2025-12-16 20:20:06,204 log 9504 16188 Unauthorized: /api/bookmarks/check/
+WARNING 2025-12-16 20:20:10,238 log 9504 16188 Unauthorized: /api/bookmarks/
+WARNING 2025-12-16 20:20:13,537 log 9504 1964 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:20:13,541 log 9504 1964 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:21:23,253 log 9504 14904 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:21:23,255 log 9504 14904 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:22:00,848 log 9504 1964 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:22:00,853 log 9504 1964 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:24:34,559 log 9504 14904 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:24:39,083 log 9504 14904 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:24:39,087 log 9504 14904 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:24:40,576 log 9504 1964 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:24:40,582 log 9504 1964 Unauthorized: /api/articles/
+INFO 2025-12-16 20:24:54,298 autoreload 19972 6312 Watching for file changes with StatReloader
+WARNING 2025-12-16 20:24:58,771 log 19972 21480 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:24:58,792 log 19972 21480 Unauthorized: /api/articles/
+INFO 2025-12-16 20:26:00,513 autoreload 19972 6312 D:\clone3\News-Aggregator\aggregator\views.py changed, reloading.
+INFO 2025-12-16 20:26:01,323 autoreload 12784 4136 Watching for file changes with StatReloader
+INFO 2025-12-16 20:26:39,067 autoreload 12784 4136 D:\clone3\News-Aggregator\aggregator\views.py changed, reloading.
+INFO 2025-12-16 20:26:39,874 autoreload 19464 11384 Watching for file changes with StatReloader
+WARNING 2025-12-16 20:26:48,220 log 19464 6948 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:26:48,240 log 19464 6948 Unauthorized: /api/articles/
+INFO 2025-12-16 20:27:41,289 autoreload 19464 11384 D:\clone3\News-Aggregator\aggregator\views.py changed, reloading.
+INFO 2025-12-16 20:27:42,063 autoreload 9200 15304 Watching for file changes with StatReloader
+WARNING 2025-12-16 20:27:46,334 log 9200 23892 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:27:46,339 log 9200 23892 Unauthorized: /api/articles/
+WARNING 2025-12-16 20:29:30,804 log 9200 15796 Unauthorized: /api/bookmarks/check/
+WARNING 2025-12-16 20:29:30,895 log 9200 15796 Unauthorized: /api/bookmarks/check/
+WARNING 2025-12-16 20:29:33,195 log 9200 15796 Unauthorized: /api/bookmarks/
+WARNING 2025-12-16 20:30:20,241 log 9200 20436 Unauthorized: /api/bookmarks/check/
+WARNING 2025-12-16 20:30:20,311 log 9200 20436 Unauthorized: /api/bookmarks/check/
+WARNING 2025-12-16 20:30:24,154 log 9200 20436 Unauthorized: /api/bookmarks/
+WARNING 2025-12-16 20:30:49,677 log 9200 20436 Bad Request: /api/users/register/
+INFO 2025-12-16 20:31:50,367 autoreload 9200 15304 D:\clone3\News-Aggregator\aggregator\serializers.py changed, reloading.
+INFO 2025-12-16 20:31:51,311 autoreload 15516 21984 Watching for file changes with StatReloader
+INFO 2025-12-16 20:32:05,163 autoreload 15516 21984 D:\clone3\News-Aggregator\aggregator\views.py changed, reloading.
+INFO 2025-12-16 20:32:05,837 autoreload 19452 1556 Watching for file changes with StatReloader
+INFO 2025-12-16 20:32:59,250 autoreload 19452 1556 D:\clone3\News-Aggregator\aggregator\serializers.py changed, reloading.
+INFO 2025-12-16 20:32:59,949 autoreload 21996 24896 Watching for file changes with StatReloader
+INFO 2025-12-16 20:33:06,649 autoreload 21996 24896 D:\clone3\News-Aggregator\aggregator\views.py changed, reloading.
+INFO 2025-12-16 20:33:07,363 autoreload 1604 20004 Watching for file changes with StatReloader
+INFO 2025-12-16 20:33:56,853 autoreload 1604 20004 D:\clone3\News-Aggregator\aggregator\serializers.py changed, reloading.
+INFO 2025-12-16 20:33:57,573 autoreload 23528 23656 Watching for file changes with StatReloader
+INFO 2025-12-16 20:34:07,047 autoreload 23528 23656 D:\clone3\News-Aggregator\aggregator\views.py changed, reloading.
+INFO 2025-12-16 20:34:07,805 autoreload 14172 15848 Watching for file changes with StatReloader
+INFO 2025-12-16 20:34:38,582 autoreload 14172 15848 D:\clone3\News-Aggregator\aggregator\urls.py changed, reloading.
+INFO 2025-12-16 20:34:39,344 autoreload 21724 11120 Watching for file changes with StatReloader
+WARNING 2025-12-16 20:34:45,712 log 21724 20332 Unauthorized: /api/users/register/
+INFO 2025-12-16 20:35:38,549 autoreload 21724 11120 D:\clone3\News-Aggregator\aggregator\views.py changed, reloading.
+INFO 2025-12-16 20:35:39,254 autoreload 9076 7648 Watching for file changes with StatReloader

@@ -9,7 +9,8 @@ from .views import (
     ArticleDetailAPIView,
     SingleArticleScrapeAPIView,
     BookmarkDeleteAPIView,
-    edit_article
+    edit_article,
+    register_user
 )
 
 urlpatterns = [
@@ -24,6 +25,7 @@ urlpatterns = [
     # User management
     path('users/<int:user_id>/edit/', views.edit_user_role, name='edit_user_role'),
     path('users/<int:user_id>/toggle-active/', views.toggle_user_active, name='toggle_user_active'),
+    path("users/register/", register_user, name="register"),
 
     # News sources
     path("toggle-source-status/<int:pk>/", views.toggle_source_status, name="toggle_source_status"),

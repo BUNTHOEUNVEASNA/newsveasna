@@ -330,7 +330,28 @@ from rest_framework.response import Response
 from .models import Article
 from .serializers import ArticleSerializer
 from .models import Article, ArticleView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework import status
 
+from .serializers import RegisterSerializer  # ✅ import it
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])  # ✅ allow public access
+def register_user(request):
+    serializer = RegisterSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    else:
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class ArticleViewSet(viewsets.ModelViewSet):
+    queryset = Article.objects.all()
+    serializer_class = ArticleSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly] 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def articles_list(request):
