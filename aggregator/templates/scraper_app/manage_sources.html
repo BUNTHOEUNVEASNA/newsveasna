@@ -1,0 +1,71 @@
+{% extends "scraper_app/base_admin.html" %}
+
+{% block title %}Source Management{% endblock %}
+{% block page_title %}Source Management{% endblock %}
+
+{% block content %}
+<div class="beautiful-card">
+
+    <div class="beautiful-header">
+        <div class="beautiful-title">Manage Your News Sources</div>
+        <a href="{% url 'admin:aggregator_newssource_add' %}" class="btn-add">
+            <i class="material-icons" style="font-size:18px;">add</i>
+            Add New Source
+        </a>
+    </div>
+
+    <table class="beautiful-table">
+    <thead>
+        <tr>
+            <th>Source Name</th>
+            <th>URL / Endpoint</th>
+            <th>Status</th>
+            <th>Status Control</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for source in sources %}
+        <tr>
+            <td>
+                <a href="{% url 'admin:aggregator_newssource_change' source.pk %}"
+                   style="text-decoration:none; color:#4f46e5; font-weight:500;">
+                    {{ source.name }}
+                </a>
+            </td>
+
+            <td>
+                <a href="{{ source.base_url }}" target="_blank" 
+                   style="color:#2563eb; text-decoration:none;">
+                    {{ source.base_url }}
+                </a>
+            </td>
+
+            <td>
+                <span class="status-badge status-{{ source.is_active|yesno:'active,inactive' }}">
+                    {{ source.is_active|yesno:'Active,Inactive' }}
+                </span>
+            </td>
+
+            <td>
+                <a href="{% url 'toggle_source_status' source.pk %}"
+                   class="btn-toggle-status {{ source.is_active|yesno:'active,inactive' }}">
+                    {% if source.is_active %}
+                        Deactivate
+                    {% else %}
+                        Activate
+                    {% endif %}
+                </a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="empty-row">
+                No news sources defined.
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+</div>
+{% endblock %}

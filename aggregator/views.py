@@ -1,4 +1,24 @@
 # aggregator/views.py
+# views.py
+from django.db.models import Count, Q  # <-- import Q here
+from datetime import timedelta
+from django.utils import timezone
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from .models import Article
+from .serializers import ArticleSerializer
+from .models import Article, ArticleView
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework import viewsets
+from rest_framework.response import Response
+from rest_framework import status
+
+from .serializers import RegisterSerializer  # ✅ import it
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.admin.views.decorators import staff_member_required
+from .models import NewsSource
 
 from rest_framework import generics, filters, status, serializers
 from rest_framework.views import APIView
@@ -75,6 +95,65 @@ def toggle_source_status(request, pk):
     source.save()
     return redirect('source_management')
 
+@staff_member_required
+def manage_sources(request):
+    sources = NewsSource.objects.all()
+    return render(request, "scraper_app/manage_sources.html", {"sources": sources})
+from django.forms import ModelForm
+from .models import NewsSource
+class NewsSourceForm(ModelForm):
+    class Meta:
+        model = NewsSource
+        fields = [
+            "name",
+            "slug",
+            "base_url",
+            "list_selector",
+            "title_selector",
+            "content_selector",
+            "is_active",
+        ]
+
+
+@staff_member_required
+def source_create(request):
+    form = NewsSourceForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect("manage_sources")
+    return render(
+        request,
+        "scraper_app/source_form.html",
+        {"form": form, "mode": "add"},
+    )
+
+
+@staff_member_required
+def source_update(request, pk):
+    source = get_object_or_404(NewsSource, pk=pk)
+    form = NewsSourceForm(request.POST or None, instance=source)
+    if form.is_valid():
+        form.save()
+        return redirect("manage_sources")
+    return render(
+        request,
+        "scraper_app/source_form.html",
+        {"form": form, "mode": "edit", "source": source},
+    )
+
+
+
+@staff_member_required
+def source_delete(request, pk):
+    source = get_object_or_404(NewsSource, pk=pk)
+    if request.method == "POST":
+        source.delete()
+        return redirect("source_management")
+    return render(
+        request,
+        "scraper_app/source_confirm_delete.html",
+        {"source": source},
+    )
 # -------------------- ARTICLE REVIEW --------------------
 @login_required
 def article_review(request):
@@ -121,6 +200,7 @@ def trigger_full_scrape(request):
             messages.success(request, f"Scraping complete! Saved {total_articles_saved} articles.")
     return redirect('dashboard_overview')
 
+# -------------------- MANUAL SCRAPER --------------------
 @login_required
 def manual_scrape(request):
     if request.method == 'POST':
@@ -320,23 +400,6 @@ class NewsSourceListAPIView(generics.ListAPIView):
     queryset = NewsSource.objects.filter(is_active=True).order_by('name')
     serializer_class = NewsSourceSerializer
     permission_classes = [AllowAny]
-# views.py
-from django.db.models import Count, Q  # <-- import Q here
-from datetime import timedelta
-from django.utils import timezone
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
-from .models import Article
-from .serializers import ArticleSerializer
-from .models import Article, ArticleView
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework import status
-
-from .serializers import RegisterSerializer  # ✅ import it
-
 
 @api_view(['POST'])
 @permission_classes([AllowAny])  # ✅ allow public access

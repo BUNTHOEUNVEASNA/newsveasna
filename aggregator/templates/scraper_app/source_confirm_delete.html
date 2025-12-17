@@ -1,0 +1,88 @@
+{% extends "scraper_app/base_admin.html" %}
+
+{% block title %}Delete News Source{% endblock %}
+{% block page_title %}Delete News Source{% endblock %}
+
+{% block content %}
+<style>
+/* Center wrapper */
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+/* Card */
+.delete-card {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.08);
+    max-width: 520px;
+    width: 100%;
+}
+
+/* Text */
+.delete-card p {
+    font-size: 16px;
+    color: #374151;
+    margin-bottom: 20px;
+}
+
+/* Actions */
+.delete-actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Buttons */
+.btn-danger {
+    background: #dc2626;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.btn-danger:hover {
+    background: #b91c1c;
+}
+
+.btn-secondary {
+    background: #e5e7eb;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: #111827;
+    font-weight: 500;
+}
+
+.btn-secondary:hover {
+    background: #d1d5db;
+}
+</style>
+
+<div class="center-wrapper">
+    <div class="delete-card">
+        <p>
+            Are you sure you want to delete
+            <strong>{{ source.name }}</strong>?
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="delete-actions">
+                <button type="submit" class="btn-danger">
+                    Yes, Delete
+                </button>
+
+                <a href="{% url 'source_management' %}" class="btn-secondary">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
